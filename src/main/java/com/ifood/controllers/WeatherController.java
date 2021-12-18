@@ -3,7 +3,7 @@ package com.ifood.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ifood.client.OpenWheaterClient;
+import com.ifood.client.OpenWeatherClient;
 import com.ifood.model.WeatherClient;
 import com.ifood.model.response.WeatherClientResponse;
 import feign.FeignException.FeignClientException;
@@ -26,17 +26,17 @@ public class WeatherController {
     @Value("${weatherAppId}")
     private String weatherAppId;
 
-    private final OpenWheaterClient openWheaterClient;
+    private final OpenWeatherClient openWeatherClient;
 
-    public WeatherController(OpenWheaterClient openWheaterClient) {
-        this.openWheaterClient = openWheaterClient;
+    public WeatherController(OpenWeatherClient openWeatherClient) {
+        this.openWeatherClient = openWeatherClient;
     }
 
     @GetMapping
     @Cacheable("city")
     @CircuitBreaker(name="weatherService", fallbackMethod = "weatherFallback")
     public ResponseEntity<WeatherClientResponse> getWeather(@RequestParam("city") String city) {
-        WeatherClient weather = openWheaterClient.getWeather(city, weatherAppId);
+        WeatherClient weather = openWeatherClient.getWeather(city, weatherAppId);
         return ResponseEntity.status(weather.getCod()).body(new WeatherClientResponse(weather));
     }
 
