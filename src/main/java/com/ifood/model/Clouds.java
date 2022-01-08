@@ -7,7 +7,7 @@ public class Clouds {
      * @deprecated (since version 1.0, used by feign)
      */
     @Deprecated(since = "1.0")
-    public Clouds() {
+    private Clouds() {
     }
 
     public Clouds(int all) {
