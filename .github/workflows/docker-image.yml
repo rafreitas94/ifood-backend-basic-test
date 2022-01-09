@@ -8,8 +8,7 @@ on:
 
 jobs:
 
-  build:
-
+  maven_build:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,6 +21,12 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
+  docker_push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
     - name: docker login
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}   
